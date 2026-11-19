@@ -15,7 +15,7 @@ int main(void){
   while(!WindowShouldClose()){
 
     // ----- Update -----
-  
+    InputPlayer();
 
     // -----  Draw  ----- 
     BeginDrawing();
