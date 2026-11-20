@@ -39,9 +39,8 @@ void DrawPlayer(){
   float fmax =  CastRayRange/2;
   float step =  CastRayRange/CastRayDensity;
 
-  int i = 0;
   for(float fi = fmin; fi < fmax; fi += step){
-    raycaster.distances[i++] = CastRayV_DDA(player.pos, player.angle + fi);
+    CastRayV(player.pos, player.angle + fi);
   }
 }
 
@@ -86,7 +85,7 @@ void InputPlayer(){
 
   int i = 0;
   for(float fi = fmin; fi < fmax; fi += step){
-    raycaster.distances[i++] = CastRayV_DDA(player.pos, player.angle + fi);
+    raycaster.rays[i++] = CastRayV_DDA(player.pos, player.angle + fi);
   }
 
 }

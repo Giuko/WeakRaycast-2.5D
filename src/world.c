@@ -53,7 +53,7 @@ void DrawWorld(){
   Color WallColor = RED;
   for(int i = 0; i < CAST_RAY_DENSITY; i++){
     int posX = i * columnWidht;
-    float d = raycaster.distances[i];
+    float d = raycaster.rays[i].dist;
     int h = MAX_WALL_SIZE*5 / d;
     if(d < 50)
       WallColor = (Color){250, 0, 0, 255};

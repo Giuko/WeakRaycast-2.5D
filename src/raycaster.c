@@ -9,6 +9,7 @@
 
 Raycaster raycaster;
 
+// Deprecated don't use
 float CastRay(float x, float y, float angle){
   Vector2 startPos = (Vector2){x, y};
   Vector2 endPos = startPos;
@@ -28,12 +29,13 @@ float CastRay(float x, float y, float angle){
   return dist;
 }
 
+// Deprecated don't use
 float CastRayV(Vector2 pos, float angle){
   return CastRay(pos.x, pos.y, angle);
 }
 
-float CastRay_DDA(float x, float y, float angle){
-  Color RayColor = YELLOW;
+Ray2D CastRay_DDA(float x, float y, float angle){
+  Ray2D ray;
   float dist = 0.0f;
   
   Vector2 startPos;
@@ -90,11 +92,13 @@ float CastRay_DDA(float x, float y, float angle){
   
   startPos = (Vector2){x, y};
   endPos   = hit;
-  DrawLineV(startPos, endPos, RayColor);
   dist = Vector2Distance(startPos, endPos);
-  return dist;
+  ray.dist = dist;
+  ray.startPos = startPos;
+  ray.endPos = endPos;
+  return ray;
 }
 
-float CastRayV_DDA(Vector2 pos, float angle){
+Ray2D CastRayV_DDA(Vector2 pos, float angle){
   return CastRay_DDA(pos.x, pos.y, angle);
 }
