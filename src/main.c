@@ -10,6 +10,7 @@
 int main(void){
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Window");
   SetTargetFPS(60);
+  SetTraceLogLevel(LOG_DEBUG);
 
   SpawnPlayer();
   while(!WindowShouldClose()){

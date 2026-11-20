@@ -3,5 +3,5 @@
 
 #include "raylib.h"
 
-void CastRay(Vector2 pos, float angle);
+float CastRay(Vector2 pos, float angle);
 #endif

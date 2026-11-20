@@ -53,3 +53,6 @@ int IsWall(float x, float y){
     return 1;
   return map[mapY][mapX];
 }
+int IsWallV(Vector2 pos){
+  return IsWall(pos.x, pos.y);
+}

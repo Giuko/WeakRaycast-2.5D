@@ -10,7 +10,7 @@
 extern int map[MAP_HEIGHT][MAP_WIDTH];
 Player player;
 
-static int Collides(float x, float y){
+static int CircleCollides(float x, float y){
   const float r = 0.0f;
   int collision = 0; 
   x /= TILE_SIZE;
@@ -42,17 +42,21 @@ void SpawnPlayer(){
 void DrawPlayer(){
   Color playerColor = RED;
   DrawCircleV(player.pos, (float)TILE_SIZE/4, playerColor);
-/*
-  float rayAngleX;
-  float rayAngleY;
-  int rayLen = 60;
+  float dist = 0.0f;
+  float CastRayRange = 2.0f;
+  int   CastRayDensity = 50;
 
-  rayAngleX = cx + cosf(player.angle) * rayLen;
-  rayAngleY = cy + sinf(player.angle) * rayLen;
+  float fmin = -CastRayRange/2;
+  float fmax =  CastRayRange/2;
+  float step =  CastRayRange/CastRayDensity;
 
-  DrawLine(cx, cy, rayAngleX, rayAngleY, YELLOW);
-*/
-  CastRay(player.pos, player.angle);
+  for(float fi = fmin; fi < fmax; fi += step){
+    // Storing the distance of the middle ray
+    if(fi >= -step/2 && fi <= step/2)
+      dist = CastRay(player.pos, player.angle + fi);
+    else CastRay(player.pos, player.angle + fi);
+  }
+  TraceLog(LOG_DEBUG, "Dist: %f\n", dist);
 }
 
 void InputPlayer(){
@@ -62,7 +66,7 @@ void InputPlayer(){
   int left  = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT); 
 
   float rotationSpeed =  5.0f;
-  float movementSpeed =  50.0f;
+  float movementSpeed =  100.0f;
 
   Vector2 nextPos = player.pos;
 
@@ -76,6 +80,6 @@ void InputPlayer(){
   if(down)  nextPos.x -= movementSpeed * GetFrameTime() * cosf(angle);
   if(down)  nextPos.y -= movementSpeed * GetFrameTime() * sinf(angle);
 
-  if(Collides(nextPos.x, nextPos.y)) return;
+  if(CircleCollides(nextPos.x, nextPos.y)) return;
   player.pos = nextPos;
 }
