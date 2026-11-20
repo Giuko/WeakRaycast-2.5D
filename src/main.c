@@ -21,6 +21,9 @@ int main(void){
     // -----  Draw  ----- 
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    DrawRectangle(0, 0, WORLD_WIDTH, WORLD_HEIGHT / 2, SKYBLUE); // Sky
+    DrawRectangle(0, WORLD_HEIGHT / 2, WORLD_WIDTH, WORLD_HEIGHT / 2, WHITE); // Floor
+    
     //DrawMap();
     //DrawPlayer();
     DrawWorld();
