@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include "world.h"
+#include "math.h"
 
 // 2D map representation
 const int map[MAP_HEIGHT][MAP_WIDTH] = {
@@ -42,4 +43,13 @@ void DrawMap(){
 
 
   DrawMapGrid();
+}
+
+int IsWall(float x, float y){
+  int mapX = (int)floorf(x);
+  int mapY = (int)floorf(y);
+
+  if(mapX < 0 || mapX >= MAP_WIDTH || mapY < 0 || mapY >= MAP_HEIGHT) 
+    return 1;
+  return map[mapY][mapX];
 }

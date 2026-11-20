@@ -7,5 +7,6 @@
 
 void DrawMapGrid();
 void DrawMap();
+int IsWall(float x, float y);
 
 #endif

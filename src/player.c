@@ -9,6 +9,17 @@
 extern int map[MAP_HEIGHT][MAP_WIDTH];
 Player player;
 
+static int Collides(float x, float y){
+  const float r = 0.0f;
+  int collision = 0; 
+  collision |= IsWall(x-r, y-r);
+  collision |= IsWall(x-r, y+r);
+  collision |= IsWall(x+r, y-r);
+  collision |= IsWall(x+r, y+r);
+
+  return collision;
+}
+
 void SpawnPlayer(){
   int posX;
   int posY;
@@ -19,8 +30,8 @@ void SpawnPlayer(){
     posX = GetRandomValue(0, 7);
     posY = GetRandomValue(0, 7);
     if(map[posY][posX]) continue;
-    player.pos.x = posX;
-    player.pos.y = posY;
+    player.pos.x = posX + 0.5f;
+    player.pos.y = posY + 0.5f;
     return;
   }
 }
@@ -29,8 +40,8 @@ void DrawPlayer(){
   int cx, cy;
   Color playerColor = RED;
   
-  cx = (player.pos.x+1) * TILE_SIZE - (int)(TILE_SIZE/2);
-  cy = (player.pos.y+1) * TILE_SIZE - (int)(TILE_SIZE/2);
+  cx = (player.pos.x) * TILE_SIZE;
+  cy = (player.pos.y) * TILE_SIZE;
 
   DrawCircle(cx, cy, (float)TILE_SIZE/4, playerColor);
 
@@ -51,15 +62,20 @@ void InputPlayer(){
   int left  = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT); 
 
   float rotationSpeed =  5.0f;
-  float movementSpeed =  5.0f;
-  float angle = player.angle;
+  float movementSpeed =  2.0f;
+
+  Vector2 nextPos = player.pos;
 
   if(right) player.angle += rotationSpeed * GetFrameTime();
   if(left)  player.angle -= rotationSpeed * GetFrameTime();
+  float angle = player.angle;
   
-  if(up)    player.pos.x += movementSpeed * GetFrameTime() * cosf(angle);
-  if(up)    player.pos.y += movementSpeed * GetFrameTime() * sinf(angle);
+  if(up)    nextPos.x += movementSpeed * GetFrameTime() * cosf(angle);
+  if(up)    nextPos.y += movementSpeed * GetFrameTime() * sinf(angle);
   
-  if(down)  player.pos.x -= movementSpeed * GetFrameTime() * cosf(angle);
-  if(down)  player.pos.y -= movementSpeed * GetFrameTime() * sinf(angle);
+  if(down)  nextPos.x -= movementSpeed * GetFrameTime() * cosf(angle);
+  if(down)  nextPos.y -= movementSpeed * GetFrameTime() * sinf(angle);
+
+  if(Collides(nextPos.x, nextPos.y)) return;
+  player.pos = nextPos;
 }
