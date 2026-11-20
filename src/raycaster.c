@@ -7,6 +7,7 @@
 #include <math.h>
 #include <stdio.h>
 
+Raycaster raycaster;
 
 float CastRay(float x, float y, float angle){
   Vector2 startPos = (Vector2){x, y};

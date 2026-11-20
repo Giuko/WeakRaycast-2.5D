@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "math.h"
 
+extern Raycaster raycaster;
 extern int map[MAP_HEIGHT][MAP_WIDTH];
 Player player;
 
@@ -38,8 +39,9 @@ void DrawPlayer(){
   float fmax =  CastRayRange/2;
   float step =  CastRayRange/CastRayDensity;
 
+  int i = 0;
   for(float fi = fmin; fi < fmax; fi += step){
-    CastRayV_DDA(player.pos, player.angle + fi);
+    raycaster.distances[i++] = CastRayV_DDA(player.pos, player.angle + fi);
   }
 }
 

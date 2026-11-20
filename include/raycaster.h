@@ -10,4 +10,9 @@ float CastRay(float x, float y, float angle);
 float CastRayV(Vector2 pos, float angle);
 float CastRay_DDA(float x, float y, float angle);
 float CastRayV_DDA(Vector2 pos, float angle);
+
+typedef struct{
+  float distances[CAST_RAY_DENSITY];
+} Raycaster; 
+
 #endif

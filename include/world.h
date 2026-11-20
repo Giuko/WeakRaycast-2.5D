@@ -5,6 +5,9 @@
 #define MAP_WIDTH     8
 #define MAP_HEIGHT    8
 
+#define WORLD_WIDTH  800
+#define WORLD_HEIGHT 600
+
 #include "raylib.h"
 
 void DrawMapGrid();
