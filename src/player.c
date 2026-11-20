@@ -10,24 +10,13 @@
 extern int map[MAP_HEIGHT][MAP_WIDTH];
 Player player;
 
-static int CircleCollides(float x, float y){
-  const float r = 0.0f;
-  int collision = 0; 
-  x /= TILE_SIZE;
-  y /= TILE_SIZE;
-  collision |= IsWall(x-r, y-r);
-  collision |= IsWall(x-r, y+r);
-  collision |= IsWall(x+r, y-r);
-  collision |= IsWall(x+r, y+r);
-
-  return collision;
-}
-
 void SpawnPlayer(){
   int posX;
   int posY;
 
   player.angle = 0.0f;
+  player.movementSpeed = MOVEMENT_SPEED;
+  player.rotationSpeed = ROTATION_SPEED;
 
   while(1){
     posX = GetRandomValue(0, 7);
@@ -42,21 +31,16 @@ void SpawnPlayer(){
 void DrawPlayer(){
   Color playerColor = RED;
   DrawCircleV(player.pos, (float)TILE_SIZE/4, playerColor);
-  float dist = 0.0f;
-  float CastRayRange = 2.0f;
-  int   CastRayDensity = 50;
+  float CastRayRange   = CAST_RAY_RANGE;
+  int   CastRayDensity = CAST_RAY_DENSITY;
 
   float fmin = -CastRayRange/2;
   float fmax =  CastRayRange/2;
   float step =  CastRayRange/CastRayDensity;
 
   for(float fi = fmin; fi < fmax; fi += step){
-    // Storing the distance of the middle ray
-    if(fi >= -step/2 && fi <= step/2)
-      dist = CastRay(player.pos, player.angle + fi);
-    else CastRay(player.pos, player.angle + fi);
+    CastRayV(player.pos, player.angle + fi);
   }
-  TraceLog(LOG_DEBUG, "Dist: %f\n", dist);
 }
 
 void InputPlayer(){
@@ -65,8 +49,8 @@ void InputPlayer(){
   int right = IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT); 
   int left  = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT); 
 
-  float rotationSpeed =  5.0f;
-  float movementSpeed =  100.0f;
+  float rotationSpeed =  player.rotationSpeed;
+  float movementSpeed =  player.movementSpeed;
 
   Vector2 nextPos = player.pos;
 
@@ -80,6 +64,13 @@ void InputPlayer(){
   if(down)  nextPos.x -= movementSpeed * GetFrameTime() * cosf(angle);
   if(down)  nextPos.y -= movementSpeed * GetFrameTime() * sinf(angle);
 
-  if(CircleCollides(nextPos.x, nextPos.y)) return;
+  if(CircleCollides(player.pos.x, nextPos.y, 5.0f)) 
+    nextPos.y = player.pos.y;
+
+  if(CircleCollides(nextPos.x, player.pos.y, 5.0f)) 
+    nextPos.x = player.pos.x;
+
+  if(CircleCollides(nextPos.x, nextPos.y, 5.0f)) return;
+
   player.pos = nextPos;
 }

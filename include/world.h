@@ -11,5 +11,9 @@ void DrawMapGrid();
 void DrawMap();
 int IsWall(float x, float y);
 int IsWallV(Vector2 pos);
+int CircleCollides(float x, float y, float r);
+int CircleCollidesV(Vector2 pos, float r);
+int PixelCollides(float x, float y);
+int PixelCollidesV(Vector2 pos);
 
 #endif

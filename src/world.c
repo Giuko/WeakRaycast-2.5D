@@ -56,3 +56,28 @@ int IsWall(float x, float y){
 int IsWallV(Vector2 pos){
   return IsWall(pos.x, pos.y);
 }
+
+int CircleCollides(float x, float y, float r){
+  int collision = 0; 
+  x /= TILE_SIZE;
+  y /= TILE_SIZE;
+  r /= TILE_SIZE;
+  collision |= IsWall(x-r, y-r);
+  collision |= IsWall(x-r, y+r);
+  collision |= IsWall(x+r, y-r);
+  collision |= IsWall(x+r, y+r);
+
+  return collision;
+}
+int CircleCollidesV(Vector2 pos, float r){
+  return CircleCollides(pos.x, pos.y, r);
+}
+int PixelCollides(float x, float y){
+  float xTile = x / TILE_SIZE;
+  float yTile = y / TILE_SIZE;
+
+  return IsWall(xTile, yTile);
+}
+int PixelCollidesV(Vector2 pos){
+  return PixelCollides(pos.x, pos.y);
+}

@@ -3,9 +3,14 @@
 
 #include "raylib.h"
 
+#define ROTATION_SPEED 5.0f
+#define MOVEMENT_SPEED 100.0f
+
 typedef struct {
   Vector2 pos;
   float angle;
+  float movementSpeed;
+  float rotationSpeed;
 } Player;
 
 void SpawnPlayer();
