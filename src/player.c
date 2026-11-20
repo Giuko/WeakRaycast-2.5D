@@ -39,7 +39,7 @@ void DrawPlayer(){
   float step =  CastRayRange/CastRayDensity;
 
   for(float fi = fmin; fi < fmax; fi += step){
-    CastRayV(player.pos, player.angle + fi);
+    CastRayV_DDA(player.pos, player.angle + fi);
   }
 }
 

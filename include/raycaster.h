@@ -6,7 +6,8 @@
 #define CAST_RAY_RANGE   2.0f
 #define CAST_RAY_DENSITY 50
 #define CAST_RAY_STEP    20.0f
-
 float CastRay(float x, float y, float angle);
 float CastRayV(Vector2 pos, float angle);
+float CastRay_DDA(float x, float y, float angle);
+float CastRayV_DDA(Vector2 pos, float angle);
 #endif
