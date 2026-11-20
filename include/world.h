@@ -8,10 +8,13 @@
 #define WORLD_WIDTH  800
 #define WORLD_HEIGHT 600
 
+#define MAX_WALL_SIZE (WORLD_WIDTH - 200)
+
 #include "raylib.h"
 
 void DrawMapGrid();
 void DrawMap();
+void DrawWorld();
 int IsWall(float x, float y);
 int IsWallV(Vector2 pos);
 int CircleCollides(float x, float y, float r);

@@ -75,4 +75,18 @@ void InputPlayer(){
   if(CircleCollides(nextPos.x, nextPos.y, 5.0f)) return;
 
   player.pos = nextPos;
+
+
+  float CastRayRange   = CAST_RAY_RANGE;
+  int   CastRayDensity = CAST_RAY_DENSITY;
+
+  float fmin = -CastRayRange/2;
+  float fmax =  CastRayRange/2;
+  float step =  CastRayRange/CastRayDensity;
+
+  int i = 0;
+  for(float fi = fmin; fi < fmax; fi += step){
+    raycaster.distances[i++] = CastRayV_DDA(player.pos, player.angle + fi);
+  }
+
 }

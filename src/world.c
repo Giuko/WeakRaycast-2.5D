@@ -1,8 +1,11 @@
 // world.c
 
 #include "raylib.h"
+#include "raycaster.h"
 #include "world.h"
 #include "math.h"
+
+extern Raycaster raycaster;
 
 // 2D map representation
 const int map[MAP_HEIGHT][MAP_WIDTH] = {
@@ -43,6 +46,25 @@ void DrawMap(){
 
 
   DrawMapGrid();
+}
+
+void DrawWorld(){
+  const int columnWidht = WORLD_WIDTH / CAST_RAY_DENSITY;
+  Color WallColor = RED;
+  for(int i = 0; i < CAST_RAY_DENSITY; i++){
+    int posX = i * columnWidht;
+    float d = raycaster.distances[i];
+    int h = MAX_WALL_SIZE*5 / d;
+    if(d < 50)
+      WallColor = (Color){250, 0, 0, 255};
+    else if(d < 100)
+      WallColor = (Color){200, 0, 0, 255};
+    else if(d < 150)
+      WallColor = (Color){150, 0, 0, 255};
+
+    int posY = (WORLD_HEIGHT/2) - h/2;
+    DrawRectangle(posX, posY, columnWidht, h, WallColor);
+  }
 }
 
 int IsWall(float x, float y){

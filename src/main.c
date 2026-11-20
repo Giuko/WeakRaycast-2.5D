@@ -4,8 +4,8 @@
 #include "world.h"
 #include <stdio.h>
 
-#define SCREEN_WIDTH  (TILE_SIZE * 8)
-#define SCREEN_HEIGHT (TILE_SIZE * 8)
+#define SCREEN_WIDTH  (WORLD_WIDTH)
+#define SCREEN_HEIGHT (WORLD_HEIGHT)
 
 int main(void){
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Window");
@@ -21,8 +21,9 @@ int main(void){
     // -----  Draw  ----- 
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    DrawMap();
-    DrawPlayer();
+    //DrawMap();
+    //DrawPlayer();
+    DrawWorld();
 
     DrawFPS(SCREEN_WIDTH - 100, 40);
     EndDrawing();
