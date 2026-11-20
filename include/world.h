@@ -8,7 +8,7 @@
 #define WORLD_WIDTH  800
 #define WORLD_HEIGHT 600
 
-#define MAX_WALL_SIZE (WORLD_WIDTH - 200)
+#define MAX_WALL_SIZE (WORLD_WIDTH)*8
 
 #include "raylib.h"
 

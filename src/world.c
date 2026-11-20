@@ -1,11 +1,13 @@
 // world.c
 
+#include "player.h"
 #include "raylib.h"
 #include "raycaster.h"
 #include "world.h"
 #include "math.h"
 
 extern Raycaster raycaster;
+extern Player player;
 
 // 2D map representation
 const int map[MAP_HEIGHT][MAP_WIDTH] = {
@@ -53,14 +55,26 @@ void DrawWorld(){
   Color WallColor = RED;
   for(int i = 0; i < CAST_RAY_DENSITY; i++){
     int posX = i * columnWidht;
-    float d = raycaster.rays[i].dist;
-    int h = MAX_WALL_SIZE*5 / d;
+    float d = raycaster.rays[i].dist * cosf(raycaster.rays[i].angle - player.angle);
+    int h = MAX_WALL_SIZE / d;
     if(d < 50)
-      WallColor = (Color){250, 0, 0, 255};
+        WallColor = (Color){255, 40, 40, 255};
     else if(d < 100)
-      WallColor = (Color){200, 0, 0, 255};
+        WallColor = (Color){230, 30, 30, 255};
     else if(d < 150)
-      WallColor = (Color){150, 0, 0, 255};
+        WallColor = (Color){200, 20, 20, 255};
+    else if(d < 200)
+        WallColor = (Color){170, 15, 15, 255};
+    else if(d < 250)
+        WallColor = (Color){140, 10, 10, 255};
+    else if(d < 300)
+        WallColor = (Color){110, 5, 5, 255};
+    else if(d < 350)
+        WallColor = (Color){80, 0, 0, 255};
+    else if(d < 400)
+        WallColor = (Color){50, 0, 0, 255};
+    else
+        WallColor = (Color){25, 0, 0, 255};
 
     int posY = (WORLD_HEIGHT/2) - h/2;
     DrawRectangle(posX, posY, columnWidht, h, WallColor);

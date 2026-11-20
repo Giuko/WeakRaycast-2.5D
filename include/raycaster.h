@@ -3,7 +3,7 @@
 
 #include "raylib.h"
 
-#define CAST_RAY_RANGE   2.0f
+#define CAST_RAY_RANGE   1.2f
 #define CAST_RAY_DENSITY 50
 #define CAST_RAY_STEP    20.0f
 
@@ -11,6 +11,7 @@ typedef struct{
   float dist;
   Vector2 startPos;
   Vector2 endPos;
+  float angle;
 } Ray2D;
 
 typedef struct{

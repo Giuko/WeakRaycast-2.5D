@@ -96,6 +96,7 @@ Ray2D CastRay_DDA(float x, float y, float angle){
   ray.dist = dist;
   ray.startPos = startPos;
   ray.endPos = endPos;
+  ray.angle = angle;
   return ray;
 }
 
