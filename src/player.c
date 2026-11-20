@@ -1,6 +1,7 @@
 // player.c
 
 #include "raylib.h"
+#include "raycaster.h"
 #include "player.h"
 #include "world.h"
 #include <stdio.h>
@@ -12,6 +13,8 @@ Player player;
 static int Collides(float x, float y){
   const float r = 0.0f;
   int collision = 0; 
+  x /= TILE_SIZE;
+  y /= TILE_SIZE;
   collision |= IsWall(x-r, y-r);
   collision |= IsWall(x-r, y+r);
   collision |= IsWall(x+r, y-r);
@@ -30,21 +33,16 @@ void SpawnPlayer(){
     posX = GetRandomValue(0, 7);
     posY = GetRandomValue(0, 7);
     if(map[posY][posX]) continue;
-    player.pos.x = posX + 0.5f;
-    player.pos.y = posY + 0.5f;
+    player.pos.x = (posX + 0.5f) * TILE_SIZE;
+    player.pos.y = (posY + 0.5f) * TILE_SIZE;
     return;
   }
 }
 
 void DrawPlayer(){
-  int cx, cy;
   Color playerColor = RED;
-  
-  cx = (player.pos.x) * TILE_SIZE;
-  cy = (player.pos.y) * TILE_SIZE;
-
-  DrawCircle(cx, cy, (float)TILE_SIZE/4, playerColor);
-
+  DrawCircleV(player.pos, (float)TILE_SIZE/4, playerColor);
+/*
   float rayAngleX;
   float rayAngleY;
   int rayLen = 60;
@@ -53,6 +51,8 @@ void DrawPlayer(){
   rayAngleY = cy + sinf(player.angle) * rayLen;
 
   DrawLine(cx, cy, rayAngleX, rayAngleY, YELLOW);
+*/
+  CastRay(player.pos, player.angle);
 }
 
 void InputPlayer(){
@@ -62,7 +62,7 @@ void InputPlayer(){
   int left  = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT); 
 
   float rotationSpeed =  5.0f;
-  float movementSpeed =  2.0f;
+  float movementSpeed =  50.0f;
 
   Vector2 nextPos = player.pos;
 

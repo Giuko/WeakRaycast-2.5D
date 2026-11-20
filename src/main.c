@@ -23,7 +23,7 @@ int main(void){
     DrawMap();
     DrawPlayer();
 
-    //DrawFPS(SCREEN_WIDTH - 100, 40);
+    DrawFPS(SCREEN_WIDTH - 100, 40);
     EndDrawing();
   }
 
