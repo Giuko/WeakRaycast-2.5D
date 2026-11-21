@@ -18,7 +18,6 @@ void SpawnPlayer(){
   player.angle         = 0.0f;
   player.movementSpeed = MOVEMENT_SPEED;
   player.rotationSpeed = ROTATION_SPEED;
-  player.hasMoved      = 0;
 
   while(1){
     posX = GetRandomValue(0, 7);
@@ -32,7 +31,9 @@ void SpawnPlayer(){
 
 void DrawPlayer(){
   Color playerColor = RED;
-  DrawCircleV(player.pos, (float)TILE_SIZE/4, playerColor);
+  Vector2 minimap_pos = (Vector2){player.pos.x/MINIMAP_RESIZE, player.pos.y/MINIMAP_RESIZE};
+  DrawCircleV(minimap_pos, (float)TILE_SIZE/4/MINIMAP_RESIZE, playerColor);
+/*
   float CastRayRange   = CAST_RAY_RANGE;
   int   CastRayDensity = CAST_RAY_DENSITY;
 
@@ -43,6 +44,7 @@ void DrawPlayer(){
   for(float fi = fmin; fi < fmax; fi += step){
     CastRayV(player.pos, player.angle + fi);
   }
+*/
 }
 
 void InputPlayer(){

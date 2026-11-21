@@ -30,12 +30,13 @@ const int map[MAP_HEIGHT][MAP_WIDTH] = {
 };
 
 void DrawMapGrid(){
+  const int minimap_tile_size = TILE_SIZE/MINIMAP_RESIZE;
   for(int i = 0; i < MAP_HEIGHT; i++)
     for(int j = 0; j < MAP_WIDTH; j++){
-      int x0 = (j+0) * TILE_SIZE;
-      int y0 = (i+0) * TILE_SIZE;
-      int x1 = (j+1) * TILE_SIZE;
-      int y1 = (i+1) * TILE_SIZE;
+      int x0 = (j+0) * minimap_tile_size;
+      int y0 = (i+0) * minimap_tile_size;
+      int x1 = (j+1) * minimap_tile_size;
+      int y1 = (i+1) * minimap_tile_size;
 
       DrawLine(x0, y0, x0, y1, BLACK);
       DrawLine(x0, y0, x1, y0, BLACK);
@@ -43,15 +44,18 @@ void DrawMapGrid(){
 }
 
 void DrawMap(){
+  const int minimap_tile_size = TILE_SIZE/MINIMAP_RESIZE;
   for(int i = 0; i < MAP_HEIGHT; i++)
     for(int j = 0; j < MAP_WIDTH; j++){
-      int x0 = (j+0) * TILE_SIZE;
-      int y0 = (i+0) * TILE_SIZE;
+      int x0 = (j+0) * minimap_tile_size;
+      int y0 = (i+0) * minimap_tile_size;
       Color c;
+      const int alpha = 200;
+      Color c_empty  = (Color){ 80,  80,  80, alpha};
+      Color c_filled = (Color){200, 200, 200, alpha};
+      c = (map[i][j]) ? c_empty : c_filled;
 
-      c = (map[i][j]) ? DARKGRAY : LIGHTGRAY;
-
-      DrawRectangle(x0, y0, TILE_SIZE, TILE_SIZE, c);
+      DrawRectangle(x0, y0, minimap_tile_size, minimap_tile_size, c);
     }
 
 
@@ -65,10 +69,14 @@ void DrawWorld(){
     int posX = i * columnWidht;
     float d = raycaster.rays[i].dist * cosf(raycaster.rays[i].angle - player.angle);
     int h = MAX_WALL_SIZE / d;
-    if(d < 50)
+    if(d < 25)
         WallColor = (Color){255, 40, 40, 255};
+    else if(d < 50)
+        WallColor = (Color){235, 37, 37, 255};
+    else if(d < 70)
+        WallColor = (Color){215, 34, 34, 255};
     else if(d < 100)
-        WallColor = (Color){230, 30, 30, 255};
+        WallColor = (Color){210, 30, 30, 255};
     else if(d < 150)
         WallColor = (Color){200, 20, 20, 255};
     else if(d < 200)
