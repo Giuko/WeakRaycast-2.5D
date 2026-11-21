@@ -72,13 +72,14 @@ void InputPlayer(){
   if(down)  nextPos.x -= movementSpeed * GetFrameTime() * cosf(angle);
   if(down)  nextPos.y -= movementSpeed * GetFrameTime() * sinf(angle);
 
-  if(CircleCollides(player.pos.x, nextPos.y, 5.0f)) 
+  const float radiusCollision = 7.5f; 
+  if(CircleCollides(player.pos.x, nextPos.y, radiusCollision)) 
     nextPos.y = player.pos.y;
 
-  if(CircleCollides(nextPos.x, player.pos.y, 5.0f)) 
+  if(CircleCollides(nextPos.x, player.pos.y, radiusCollision)) 
     nextPos.x = player.pos.x;
 
-  if(CircleCollides(nextPos.x, nextPos.y, 5.0f)) return;
+  if(CircleCollides(nextPos.x, nextPos.y, radiusCollision)) return;
 
   player.pos = nextPos;
 
