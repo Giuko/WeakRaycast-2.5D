@@ -11,6 +11,7 @@ typedef struct {
   float angle;
   float movementSpeed;
   float rotationSpeed;
+  int hasMoved;
 } Player;
 
 void SpawnPlayer();

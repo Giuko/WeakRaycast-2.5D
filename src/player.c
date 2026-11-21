@@ -15,9 +15,10 @@ void SpawnPlayer(){
   int posX;
   int posY;
 
-  player.angle = 0.0f;
+  player.angle         = 0.0f;
   player.movementSpeed = MOVEMENT_SPEED;
   player.rotationSpeed = ROTATION_SPEED;
+  player.hasMoved      = 0;
 
   while(1){
     posX = GetRandomValue(0, 7);
@@ -45,10 +46,14 @@ void DrawPlayer(){
 }
 
 void InputPlayer(){
+  int hasMoved;
   int up    = IsKeyDown(KEY_W) || IsKeyDown(KEY_UP); 
   int down  = IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN); 
   int right = IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT); 
   int left  = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT); 
+
+  if(up || down || right || left) hasMoved = 1;
+  else hasMoved = 0;
 
   float rotationSpeed =  player.rotationSpeed;
   float movementSpeed =  player.movementSpeed;
@@ -84,8 +89,8 @@ void InputPlayer(){
   float step =  CastRayRange/CastRayDensity;
 
   int i = 0;
-  for(float fi = fmin; fi < fmax; fi += step){
-    raycaster.rays[i++] = CastRayV_DDA(player.pos, player.angle + fi);
-  }
+  if(hasMoved)
+    for(float fi = fmin; fi < fmax; fi += step)
+      raycaster.rays[i++] = CastRayV_DDA(player.pos, player.angle + fi);
 
 }

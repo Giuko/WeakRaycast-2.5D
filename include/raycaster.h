@@ -4,7 +4,7 @@
 #include "raylib.h"
 
 #define CAST_RAY_RANGE   1.2f
-#define CAST_RAY_DENSITY 50
+#define CAST_RAY_DENSITY 100
 #define CAST_RAY_STEP    20.0f
 
 typedef struct{
